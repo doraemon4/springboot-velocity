@@ -1,0 +1,132 @@
+<html>
+<head>
+    <title>velocity</title>
+    <style type="text/css">
+        body {
+            border-collapse:collapse;
+            width: 100%;
+            margin: 40px auto;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: #444;
+        }
+        table {
+            *border-collapse: collapse; /* IE7 and lower */
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .bordered {
+            border-collapse:collapse;
+            border: solid #ccc 1px;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            -webkit-box-shadow: 0 0px 0px #ccc;
+            -moz-box-shadow: 0 0px 0px #ccc;
+            box-shadow: 0 0px 0px #ccc;
+        }
+
+        .bordered tr:hover {
+            border-collapse:collapse;
+            background: #fbf8e9;
+            -o-transition: all 0.1s ease-in-out;
+            -webkit-transition: all 0.1s ease-in-out;
+            -moz-transition: all 0.1s ease-in-out;
+            -ms-transition: all 0.1s ease-in-out;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .bordered td, .bordered th {
+            border-collapse:collapse;
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .bordered th {
+            border-collapse:collapse;
+            font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            background-color: #dce9f9;
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            -webkit-box-shadow: 0 0px 0 rgba(255,255,255,.8) inset;
+            -moz-box-shadow:0 0px 0 rgba(255,255,255,.8) inset;
+            box-shadow: 0 0px 0 rgba(255,255,255,.8) inset;
+            text-shadow: 0 0px 0 rgba(255,255,255,.8);
+        }
+
+        .bordered td:first-child, .bordered th:first-child {
+            font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            border-collapse:collapse;
+            border-left: 1px solid #ccc;
+        }
+
+        .bordered th:first-child {
+            border-collapse:collapse;
+            -moz-border-radius: 1px 0 0 0;
+            -webkit-border-radius: 1px 0 0 0;
+            border-radius: 1px 0 0 0;
+        }
+
+        .bordered th:last-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 1px 0 0;
+            -webkit-border-radius: 0 1px 0 0;
+            border-radius: 0 1px 0 0;
+        }
+
+        .bordered th:only-child{
+            border-collapse:collapse;
+            -moz-border-radius: 1px 1px 0 0;
+            -webkit-border-radius: 1px 1px 0 0;
+            border-radius: 1px 1px 0 0;
+        }
+
+        .bordered tr:last-child td:first-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 0 0 1px;
+            -webkit-border-radius: 0 0 0 1px;
+            border-radius: 0 0 0 1px;
+        }
+
+        .bordered tr:last-child td:last-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 0 1px 0;
+            -webkit-border-radius: 0 0 1px 0;
+            border-radius: 0 0 1px 0;
+        }
+
+        td.alt {
+            background: #F5FAFA;
+            color: #797268;
+        }
+    </style>
+    <link type="text/css" href="../css/pagination.css" />
+    <script type="text/javascript" src="../js/jquery.pagination.js"></script>
+</head>
+<body>
+<table class="bordered">
+    <tr>
+        <th colspan="22"><h1>[$title]</h1></th>
+    </tr>
+    <tr>
+        <th colspan="2">编号</th>
+        <th colspan="2">姓名</th>
+        <th colspan="2">性别</th>
+        <th colspan="3">年龄</th>
+        <th colspan="3">邮箱</th>
+    </tr>
+
+    #foreach($user in ${userList})
+        <tr>
+            <td colspan="2" class="spec">$velocityCount</td>
+            <td colspan="2">$user.name</td>
+            <td colspan="2">$user.sex</td>
+            <td colspan="3">$user.age</td>
+            <td colspan="3">$user.email</td>
+        </tr>
+    #end
+</table>
+</body>
+</html>

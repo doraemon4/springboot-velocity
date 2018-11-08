@@ -1,0 +1,170 @@
+<html>
+<head>
+    <title>velocity</title>
+    <style type="text/css">
+        body {
+            border-collapse:collapse;
+            width: 100%;
+            margin: 40px auto;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: #444;
+        }
+        table {
+            *border-collapse: collapse; /* IE7 and lower */
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .bordered {
+            border-collapse:collapse;
+            border: solid #ccc 1px;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            -webkit-box-shadow: 0 0px 0px #ccc;
+            -moz-box-shadow: 0 0px 0px #ccc;
+            box-shadow: 0 0px 0px #ccc;
+        }
+
+        .bordered tr:hover {
+            border-collapse:collapse;
+            background: #fbf8e9;
+            -o-transition: all 0.1s ease-in-out;
+            -webkit-transition: all 0.1s ease-in-out;
+            -moz-transition: all 0.1s ease-in-out;
+            -ms-transition: all 0.1s ease-in-out;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .bordered td, .bordered th {
+            border-collapse:collapse;
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .bordered th {
+            border-collapse:collapse;
+            font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            background-color: #dce9f9;
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            -webkit-box-shadow: 0 0px 0 rgba(255,255,255,.8) inset;
+            -moz-box-shadow:0 0px 0 rgba(255,255,255,.8) inset;
+            box-shadow: 0 0px 0 rgba(255,255,255,.8) inset;
+            text-shadow: 0 0px 0 rgba(255,255,255,.8);
+        }
+
+        .bordered td:first-child, .bordered th:first-child {
+            font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            border-collapse:collapse;
+            border-left: 1px solid #ccc;
+        }
+
+        .bordered th:first-child {
+            border-collapse:collapse;
+            -moz-border-radius: 1px 0 0 0;
+            -webkit-border-radius: 1px 0 0 0;
+            border-radius: 1px 0 0 0;
+        }
+
+        .bordered th:last-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 1px 0 0;
+            -webkit-border-radius: 0 1px 0 0;
+            border-radius: 0 1px 0 0;
+        }
+
+        .bordered th:only-child{
+            border-collapse:collapse;
+            -moz-border-radius: 1px 1px 0 0;
+            -webkit-border-radius: 1px 1px 0 0;
+            border-radius: 1px 1px 0 0;
+        }
+
+        .bordered tr:last-child td:first-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 0 0 1px;
+            -webkit-border-radius: 0 0 0 1px;
+            border-radius: 0 0 0 1px;
+        }
+
+        .bordered tr:last-child td:last-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 0 1px 0;
+            -webkit-border-radius: 0 0 1px 0;
+            border-radius: 0 0 1px 0;
+        }
+
+        td.alt {
+            background: #F5FAFA;
+            color: #797268;
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="../css/pagination.css" />
+    <script type="text/javascript" src="../js/jquery-1.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.pagination.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var jsonData =  JSON.parse('$!userList');
+            //var jsonData = eval(json);
+            var num_entries = jsonData.length;
+            var showCount = 12;
+            $("#total").html("总共有 "+num_entries+" 条数据 每页显示"+showCount+"条");
+            var initPagination = function() {
+
+                //创建分页
+                $("#pagination").pagination(num_entries, {
+                    num_edge_entries: 1,
+                    num_display_entries: 6,
+                    callback: pageselectCallback,
+                    items_per_page:showCount //pagesize
+                });
+            }();
+            function pageselectCallback(page_index, jq){
+                var max_elem = Math.min((page_index+1) *showCount, num_entries);
+                $("table>tbody").html("");
+                for(var i=page_index*showCount;i<max_elem;i++){
+                    var user=jsonData[i];
+                    $("table>tbody")
+                            .append("<tr>"+
+                                    "<td colspan=\"2\" class=\"spec\">"+i+"</td>"+
+                                    "<td colspan=\"2\">"+user.name+"</td>"+
+                                    "<td colspan=\"2\">"+user.sex+"</td>"+
+                                    "<td colspan=\"2\">"+user.age+"</td>"+
+                                    "<td colspan=\"2\">"+user.email+"</td>"+
+                                    "</tr>"
+                            );//装载对应分页的内容
+                }
+                return false;
+            }
+        });
+    </script>
+</head>
+<body>
+<table class="bordered">
+    <thead>
+        <tr>
+            <th colspan="22"><h1>[$title]</th>
+        </tr>
+        <tr>
+            <th colspan="2">编号</th>
+            <th colspan="2">姓名</th>
+            <th colspan="2">性别</th>
+            <th colspan="2">年龄</th>
+            <th colspan="3">邮箱</th>
+        </tr>
+    </thead>
+    <tbody>
+    <!--这里是动态变化的-->
+    </tbody>
+</table>
+<div class="pages">
+    <div id="total"></div>
+    <div id="Pagination">
+        <div id="pagination" class="pagination"></div>
+    </div>
+</div>
+</body>
+</html>
