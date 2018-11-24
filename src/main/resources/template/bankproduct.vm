@@ -1,0 +1,160 @@
+<html>
+<head>
+    <title>bankproduct</title>
+    <style type="text/css">
+        body {
+            border-collapse:collapse;
+            width: 100%;
+            margin: 40px auto;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: #444;
+        }
+        table {
+            *border-collapse: collapse; /* IE7 and lower */
+            border-spacing: 0;
+            width: 100%;
+        }
+
+        .bordered {
+            border-collapse:collapse;
+            border: solid #ccc 1px;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            -webkit-box-shadow: 0 0px 0px #ccc;
+            -moz-box-shadow: 0 0px 0px #ccc;
+            box-shadow: 0 0px 0px #ccc;
+        }
+
+        .bordered tr:hover {
+            border-collapse:collapse;
+            background: #fbf8e9;
+            -o-transition: all 0.1s ease-in-out;
+            -webkit-transition: all 0.1s ease-in-out;
+            -moz-transition: all 0.1s ease-in-out;
+            -ms-transition: all 0.1s ease-in-out;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .bordered td, .bordered th {
+            border-collapse:collapse;
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .bordered th {
+            border-collapse:collapse;
+            font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            background-color: #dce9f9;
+            border-left: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            -webkit-box-shadow: 0 0px 0 rgba(255,255,255,.8) inset;
+            -moz-box-shadow:0 0px 0 rgba(255,255,255,.8) inset;
+            box-shadow: 0 0px 0 rgba(255,255,255,.8) inset;
+            text-shadow: 0 0px 0 rgba(255,255,255,.8);
+        }
+
+        .bordered td:first-child, .bordered th:first-child {
+            font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+            border-collapse:collapse;
+            border-left: 1px solid #ccc;
+        }
+
+        .bordered th:first-child {
+            border-collapse:collapse;
+            -moz-border-radius: 1px 0 0 0;
+            -webkit-border-radius: 1px 0 0 0;
+            border-radius: 1px 0 0 0;
+        }
+
+        .bordered th:last-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 1px 0 0;
+            -webkit-border-radius: 0 1px 0 0;
+            border-radius: 0 1px 0 0;
+        }
+
+        .bordered th:only-child{
+            border-collapse:collapse;
+            -moz-border-radius: 1px 1px 0 0;
+            -webkit-border-radius: 1px 1px 0 0;
+            border-radius: 1px 1px 0 0;
+        }
+
+        .bordered tr:last-child td:first-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 0 0 1px;
+            -webkit-border-radius: 0 0 0 1px;
+            border-radius: 0 0 0 1px;
+        }
+
+        .bordered tr:last-child td:last-child {
+            border-collapse:collapse;
+            -moz-border-radius: 0 0 1px 0;
+            -webkit-border-radius: 0 0 1px 0;
+            border-radius: 0 0 1px 0;
+        }
+
+        td.alt {
+            background: #F5FAFA;
+            color: #797268;
+        }
+    </style>
+</head>
+<body>
+<table class="bordered">
+    <thead>
+        <tr>
+            <th colspan="22"><h1>[bankproduct spider]$!subject</h1>($!startTime ~ $!finshTime)</th>
+        </tr>
+        <tr>
+            <th colspan="2">id</th>
+            <th colspan="2">bankCode</th>
+            <th colspan="2">channel</th>
+            <th colspan="2">type</th>
+            <th colspan="3">msg</th>
+        </tr>
+    </thead>
+    <tbody>
+        #foreach($result in ${bankResultList})
+            #if( $result.type =='ADDDETAIL' || $result.type =='UPDATEDETAIL')
+            <tr>
+                <td colspan="2" class="spec">$velocityCount</td>
+                <td colspan="2">$result.bankCode</td>
+                <td colspan="2">$result.channel</td>
+                <td colspan="2">$result.type</td>
+                <td colspan="2" style="padding: 0px 0px">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th colspan="2">proCode</th>
+                            <th colspan="2">detail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <!--velocity解析json字符串-->
+                            #set( $jsonData = '#set( $jsonData = ' + $result.message + ' )' )
+                            #evaluate ($jsonData)
+                            #foreach($product in $jsonData)
+                            <tr><td colspan="2">$product.proCode</td><td colspan="2">$product.message</td></tr>
+                            #end
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            #else
+            <tr>
+                <td colspan="2" class="spec">$velocityCount</td>
+                <td colspan="2">$result.bankCode</td>
+                <td colspan="2">$result.channel</td>
+                <td colspan="2">$result.type</td>
+                <td colspan="2">$result.message</td>
+            </tr>
+            #end
+        #end
+    </tbody>
+</table>
+</body>
+</html>
